@@ -1,0 +1,15 @@
+- Put or change the user locally:
+git config --global user.name "your-name"
+git config --global user.email "your-email"
+git config --global list --> It will list your configuration.
+
+
+- Clone a repository:
+git clone URL
+
+
+
+Cheat sheet:
+config --> To set or see the configuration of the git account.
+clone --> To clone an existing repository.
+status --> Shows the status of the repository (branch, commit, etc.)
