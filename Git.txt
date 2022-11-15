@@ -1,3 +1,8 @@
+Git has 3 areas:
+The Working Directory: the space where you make changes and work normally.
+The Staging Area: the files that you want to add are there.
+The Repository: the git folder (the local repository) that will update with the online one (the online repository).
+
 - Put or change the user locally:
 git config --global user.name "your-name"
 git config --global user.email "your-email"
@@ -7,9 +12,28 @@ git config --global list --> It will list your configuration.
 - Clone a repository:
 git clone URL
 
+- Create a local repository:
+git init project-name
+
+- Add files to the staging area:
+git add file-name
+
+- Commit changes to the local repository that are in the staging area:
+git commit -m "Text" --> -m?
+
+- Push the changes to the online repository:
+git push origin main --> Where "origin" referes to the GitHub repository name and "main" to the branch we want to commit the changes.
+
 
 
 Cheat sheet:
+add --> 
+branch -->
 config --> To set or see the configuration of the git account.
 clone --> To clone an existing repository.
+commit --> To put the file changes on the local repository.
+init --> To create a new local repository.
+push --> To save the commit file changes on the online repository.
+remote --> 
 status --> Shows the status of the repository (branch, commit, etc.)
+version --> To see the git version.
