@@ -11,29 +11,66 @@ git config --global list --> It will list your configuration.
 
 - Clone a repository:
 git clone URL
+git clone URL "directory name"
 
-- Create a local repository:
+- Create an empty local repository or add git to a current one:
+git init --> To add git to an existing project.
 git init project-name
 
 - Add files to the staging area:
+git add . --> The dot (.) will add all the files not tracked.
 git add file-name
 
 - Commit changes to the local repository that are in the staging area:
-git commit -m "Text" --> -m?
+git commit --> It will open the default editor to write the changes on the commit.
+git commit -m "Text" --> -m means "message".
+git commit -a -m "Text" --> 
 
 - Push the changes to the online repository:
 git push origin main --> Where "origin" referes to the GitHub repository name and "main" to the branch we want to commit the changes.
 
 
+- See the difference in files that are not added to the local respository:
+git diff file-name
 
-Cheat sheet:
-add --> 
+- See the history commit changes:
+git log
+git log --online --> Shows an abridged version of the log history (one line per commit).
+
+- Remove a file from the staging area:
+git rm --cached file-name
+
+- Move to a previous or next version of a file or commit that is on the local repository:
+git checkout file-name
+git checkout commit-id
+git checkout main --> It goes to the last commit.
+
+- Revert all the changes made on the last commit making a new commit:
+git revert commit-id 
+
+
+gitignore --> ???
+
+##########################
+#                        #
+#  Cheat sheet           #
+#                        #
+##########################
+
+add --> To add files to the staging area.
 branch -->
-config --> To set or see the configuration of the git account.
+checkout --> To undo the changes on the files (restore the previous version allocated on the local repository).
 clone --> To clone an existing repository.
 commit --> To put the file changes on the local repository.
-init --> To create a new local repository.
+config --> To set or see the configuration of the git account.
+diff --> See the difference in files that are not added to the local respository.
+init --> To create a new local repository or add git to an already created project.
+log --> To see the commit history.
 push --> To save the commit file changes on the online repository.
 remote --> 
+reset --> 
+restore -->
+revert --> To go back one commit and revert all the changes creating a new commit.
+rm --> Short for "Remove".
 status --> Shows the status of the repository (branch, commit, etc.)
 version --> To see the git version.
