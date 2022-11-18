@@ -48,6 +48,21 @@ git checkout main --> It goes to the last commit.
 - Revert all the changes made on the last commit making a new commit:
 git revert commit-id 
 
+- Create a new branch:
+git branch name
+git checkout -b name --> Creates a new branch and take you there.
+
+- Moving between branches:
+git checkout branch-name
+
+- List all the branches:
+git branch -a
+
+- Delete a branch:
+git branch -d name
+
+- Merge a branch in the current branch:
+git merge branch-name
 
 gitignore --> ???
 
@@ -58,14 +73,15 @@ gitignore --> ???
 ##########################
 
 add --> To add files to the staging area.
-branch -->
-checkout --> To undo the changes on the files (restore the previous version allocated on the local repository).
+branch --> To create a new branch.
+checkout --> To move between commits, branches, file versions.
 clone --> To clone an existing repository.
 commit --> To put the file changes on the local repository.
 config --> To set or see the configuration of the git account.
 diff --> See the difference in files that are not added to the local respository.
 init --> To create a new local repository or add git to an already created project.
 log --> To see the commit history.
+merge --> To merge branches.
 push --> To save the commit file changes on the online repository.
 remote --> 
 reset --> 
