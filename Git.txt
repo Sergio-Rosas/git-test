@@ -6,7 +6,7 @@ The Repository: the git folder (the local repository) that will update with the 
 - Put or change the user locally:
 git config --global user.name "your-name"
 git config --global user.email "your-email"
-git config --global list --> It will list your configuration.
+git config --global --list --> It will list your configuration.
 
 
 - Clone a repository:
