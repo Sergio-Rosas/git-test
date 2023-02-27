@@ -17,6 +17,9 @@ git clone URL "directory name"
 git init --> To add git to an existing project.
 git init project-name
 
+- Create a remote origin to a new repository:
+git remote add origin url --> It connects your local wih the remote repository creating an origin.
+
 - Add files to the staging area:
 git add . --> The dot (.) will add all the files not tracked.
 git add file-name
@@ -35,7 +38,7 @@ git diff file-name
 
 - See the history commit changes:
 git log
-git log --online --> Shows an abridged version of the log history (one line per commit).
+git log --oneline --> Shows an abridged version of the log history (one line per commit).
 
 - Remove a file from the staging area:
 git rm --cached file-name
@@ -60,9 +63,15 @@ git branch -a
 
 - Delete a branch:
 git branch -d name
+git push origin --delete name --> Deletes a branch and push the changes to the online repository.
 
 - Merge a branch in the current branch:
 git merge branch-name
+
+- Update your local repository with the online repository changes.
+git pull --> It will pull everything that is in the already connected online repository.
+git pull origin branch --> Specifically pull the code of the bracnch inputed.
+git pull origin main --> I will pull everything from the online repository.
 
 gitignore --> ???
 
