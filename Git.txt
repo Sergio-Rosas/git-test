@@ -1,79 +1,248 @@
 Git has 3 areas:
 The Working Directory: the space where you make changes and work normally.
-The Staging Area: the files that you want to add are there.
+The Staging Area(index): the files that you want to add are there.
 The Repository: the git folder (the local repository) that will update with the online one (the online repository).
 
-- Put or change the user locally:
-git config --global user.name "your-name"
-git config --global user.email "your-email"
-git config --global --list --> It will list your configuration.
+Git files lifecycle:
+Untracked: New created files in the working directory that are not tracked in the staging area.
+Tracked:
+- Modified: Working directory files that are modified.
+- Staged: Untracked or modified files that are ready to be committed to the repository.
+- Unmodified: Files that live on the repository and are unmodified in the working directory.
+Ignored: Files that are not tracked but are on the .gitignore file.
 
+Low Git commands:
+git hash-object:
+git mktree:
+git cat-file:
+git read-tree <hash> --> Put repository files in the staging area.
 
-- Clone a repository:
-git clone URL
-git clone URL "directory name"
+The HEAD is the reference to the currently checked-out branch or commit.
+Detached HEAD state: When the HEAD is moved to another commit without branch.
+Commits made in the detached HEAD state will be garbage collected after 30 days if they are not in a new branch after checking out to another branch.
+
+Merge:
+The act of join 2 branches. The commit history is retained.
+
+There are two ways of merge:
+Fast-forward merge --> When there are not further commits in the main branch after the new branch was created. The main branch must be selected then the
+merge branch indicated. The only thing that happens is the HEAD and the main branch pointer are moved to the last commit of the merged branch. The branch
+merged can be safely removed.
+3-way merge --> When there are further commits in the main branch after the feature branch was created. It consists in creating a new commit that will point
+to 2 parents, the last commit of the 2 branches. The branch merged can be safely removed.
+
+Origin:
+Default name for the remote server.
+
+Pull Request:
+Request to make a merge commit on a GitHub repository.
+
+Tag:
+Static text pointer to specific commit.
+
+Rebasing:
+The act of join 2 branches. The commit history is not retained, only one parent for each commit.
+It's made in a 2-step way process:
+1) The feature branch is checked out (selected) and is rebased to the base branch.
+2) The base branch is checked out (selected) and the feature branch in merged. Commits without pointers are garbage collected.
+
+gitignore:
+<file-name> --> Ignores the specific file.
+<folder-name>/ --> Ignore the specific folder and all its contents. example/
+*.<extension> --> Ignores all files with the specified extension.
+- Best practices:
++ Build folders like "bin/".
++ Dependency folders like "node_modules/"
++ Compiled and log files like "*.pyc" or "*.log"
++ Hidden OS files like "Thumbs.db" or ".DS_Store"
+
 
 - Create an empty local repository or add git to a current one:
 git init --> To add git to an existing project.
 git init project-name
 
-- Create a remote origin to a new repository:
-git remote add origin url --> It connects your local wih the remote repository creating an origin.
+- Put or change the user:
+git config --global user.name <name> --> Changes the user name globally.
+git config --global user.email <email> --> Changes the user email globally.
+git config --global --list --> It will list your configuration.
+git config user.name <name> --> Changes the user name locally.
+git config user.email <email> --> Changes the user email locally.
+
+- Delete all user information:
+git config credential.helper ""
+
+- See the status of the areas:
+git status --> Shows the current branch, if there are untracked files and which ones, if there are files to commit and which ones.
+
+- Staging Area:
+git ls-files --> Lists all files in the staging area. -s to see them in table format.
+git checkout-index <file_name> --> Moves files in the staging are to the working directory but keep them tracked. -a will move all files.
 
 - Add files to the staging area:
+git add --> To start tracking files. It always needs an argument
 git add . --> The dot (.) will add all the files not tracked.
-git add file-name
+git add <file-name> --> Add the file indicated to the staging area.
+
+- Remove a file from the staging area:
+git rm --cached <file-name> --> The file will be untracked.
+
+- Save changes made on the working directory that are not commited (stash):
+git stash
+
+- Recover stashed changes:
+git stash pop
 
 - Commit changes to the local repository that are in the staging area:
 git commit --> It will open the default editor to write the changes on the commit.
 git commit -m "Text" --> -m means "message".
-git commit -a -m "Text" --> 
+git commit -a -m "Text" --> Commits to the repository without first manually putting the files in the staging area.
 
-- Push the changes to the online repository:
-git push origin main --> Where "origin" referes to the GitHub repository name and "main" to the branch we want to commit the changes.
+- Revert all the changes made on the last commit making a new commit:
+git revert HEAD 
 
+- Revert all the changes made on a specific commit making a new commit:
+git revert <commit-id> 
 
-- See the difference in files that are not added to the local respository:
-git diff file-name
+- Going to a previous commit and discard previous commits (destructive operation that modifies history):
+git reset <commit-id> --> Changes on forward commits discarded and unstaged but remain in the working directory. (Mixed option).
+git reset --soft <commit-id> --> Changes of forward commits are discarded, but changes in the staging area and working directory are kept.
+git reset --hard <commit-id> --> Changes of forward commits are discarded, unstaged and removed from working directory.
+git reset HEAD~<number> --> Goes back the number of commits specified in mixed option.
 
 - See the history commit changes:
 git log
 git log --oneline --> Shows an abridged version of the log history (one line per commit).
+git log --graph --> Shows the graphs commit.
+git log --stat --> Shows how many files were modified in the commit.
+git log -p --> Shows file changes of every commit.
+git log -<number> --> Shows the last <number> of commits.
+git log --author=<name> --> Shows commits by author name.
+git log -grep="<expression>" --> Shows commits that contains the expression specified.
+git log --pretty=format:"<options>" --> Format the log with the options given.
+git log --merges --> Shows only merge commits.
+git log --no-merges --> Shows only no-merge commits.
+git lg --> Custom snippet to show the log:
+    git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset' --abbrev-commit"
+    git config --global alias.lg "log --topo-order --all --graph --date=local --pretty=format:'%C(green)%h%C(reset) %><(55,trunc)%s%C(red)%d%C(reset) %C(blue)[%an]%C(reset) %C(yellow)%ad%C(reset)%n'"
 
-- Remove a file from the staging area:
-git rm --cached file-name
+- More log options (The flags can be combined):
+git shortlog --> Shows all commits by author in alphabetical order.
+git shortlog -n --> Orders the shortlog by person with more commits.
+git shortlog -s --> Shows the shortlog with only number of commits.
+git shortlog -e --> Shows the list with emails.
+
+- Show all the operations made on the local repository (90 days only):
+git reflog
+git reflog <branch> --> Shows only operations done in the specified branch.
+
+- Change last commit information:
+git commit --amend --author="person name <email>" --> Change author information.
+git commit --amend -m "Text" --> Change commit message.
 
 - Move to a previous or next version of a file or commit that is on the local repository:
-git checkout file-name
-git checkout commit-id
-git checkout main --> It goes to the last commit.
+git checkout <file-name>
+git checkout <commit-id> --> Moves the HEAD to a specific commit and puts you in a detached HEAD state.
+git checkout main --> It moves the HEAD to the last commit.
+git checkout HEAD@{<number>} --> Goes to the commit referenced in the HEAD number. Use reflog to see which one to go.
 
-- Revert all the changes made on the last commit making a new commit:
-git revert commit-id 
-
-- Create a new branch:
-git branch name
-git checkout -b name --> Creates a new branch and take you there.
-
-- Moving between branches:
-git checkout branch-name
+- Apply a commit from one branch to another:
+git cherry-pick <commit-id>
+git cherry-pick --no-commit <commit-id> --> Does the same but doesn't commit the changes, however the staged area and working directory are modified.
 
 - List all the branches:
-git branch -a
+git branch
+git branch -a --> Lists all branched locally and remotely.
+git branch -r --> Lists all branches remotely.
+git branch -vv --> Shows local branches and their correspondent remote branch.
+
+- Create a new branch:
+git branch <name>
+git checkout -b <name> --> Creates a new branch and take you there.
+
+- Moving between branches:
+git checkout <branch>
+
+- Rename specific branch:
+git branch -m <old> <new>
 
 - Delete a branch:
-git branch -d name
-git push origin --delete name --> Deletes a branch and push the changes to the online repository.
+git branch -d <name> --> To delete only merge branches.
+git branch -D <name> --> To delete any branches.
+git push origin --delete <branch-name> --> Deletes a branch and push the changes to the online repository. -d serves too.
+    The local branch will still exist.
+
+- Clone a repository (only de main branch):
+git clone URL
+git clone URL "directory name"
+
+- To unpack objects:
+git unpack-objects --> Unpacks the package archive on the package folder.
+
+- See the difference in files that are not added to the local repository:
+git diff --> Shows all differences in all files.
+git diff file-name --> Shows differences in the file specified.
 
 - Merge a branch in the current branch:
-git merge branch-name
+git merge <feature-branch>
+git merge --abort --> Aborts the current mergin.
 
-- Update your local repository with the online repository changes.
-git pull --> It will pull everything that is in the already connected online repository.
-git pull origin branch --> Specifically pull the code of the bracnch inputed.
-git pull origin main --> I will pull everything from the online repository.
+- See the remote servers:
+git remote --> Shows the remote server.
+git remote -v --> Shows the URLs to push and fetch.
+git remote show origin --> Shows detailed information of the local and remote repositories and branches.
+git remote update origin --prune --> Updates the branches in the remote repository.
 
-gitignore --> ???
+- Update your local repository, but not the working directory, from the remote repository:
+git fetch --> Merges the remote repository (feature branch) with the local repository (receiving branch) in the FETCH_HEAD.
+git fetch -v -->
+
+- Update your local repository working directory with the remote repository changes.
+git pull --> It will pull everything that is in the already connected to the remote repository in the origin default only in the checked out branch.
+    It first fetches and then updates the staging area and the working directory.
+git pull -v --> Verbose
+git pull origin <branch> --> Specifically pull the code of the branch inputted.
+git pull origin main --> I will pull everything from the remote repository.
+
+- Push the changes to the online repository:
+git push --> To synchronize the remote repository with local changes.
+git push --set-upstream <remote-server-name> <branch-name> --> Pushes changes to a new branch. --set-upstream can be changed by -u.
+git push --tags --> Pushes the tags (tags are not pushed automatically).
+git push <tag-name> --> Pushes a specific tag (tags are not pushed automatically).
+
+- Delete file from the repository (not from the working directory):
+git rm --cached <file-name>
+
+- See all references (HEAD and branches):
+git show-ref --> Shows all references local and remote.
+git show-ref <branch-name> --> Shows all references local and remote for the specified branch.
+
+- Create a remote origin to a new repository:
+git remote add <remote-server> url --> It connects your local repository with a remote repository. Use origin for your remote server, upstream for a foreign server.
+
+- Set the remote URL:
+git remote set-url <server-name> <url>
+
+- See tags:
+git tag
+
+- Create a tag:
+git tag <text> --> Lightweight tag.
+git tag -a <text> -m "Notes" --> Annotated tag.
+
+- Show specific tag:
+git tag -v <tag-name>
+git show <tag>
+
+- Rebasing
+git rebase <main-branch>
+
+- Squash rebasing
+git rebase -i <commit-id> --> This will squash multiple commits into a single one. The -i will prompt a file where the word "pick" should be changed by "s" in all but the first line.
+
+- Garbage collection
+git gc --> It pack objects if necessary.
+
+
 
 ##########################
 #                        #
