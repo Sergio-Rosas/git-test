@@ -243,6 +243,11 @@ git rebase -i <commit-id> --> This will squash multiple commits into a single on
 git gc --> It pack objects if necessary.
 
 
+Git Hooks:
+They are executable scripts that can run in each part of Git commands. Hooks are disabled by default. To allow them the extenion "sample" should be deleted.
+Hooks are not pushed to the remote repository.
+
+
 
 ##########################
 #                        #
