@@ -96,6 +96,7 @@ git stash pop
 git commit --> It will open the default editor to write the changes on the commit.
 git commit -m "Text" --> -m means "message".
 git commit -a -m "Text" --> Commits to the repository without first manually putting the files in the staging area.
+git commit -n -m "text" --> Commit will bypass all hook tests (-n is abbreviation of --no-verify).
 
 - Revert all the changes made on the last commit making a new commit:
 git revert HEAD 
@@ -171,7 +172,7 @@ git branch -D <name> --> To delete any branches.
 git push origin --delete <branch-name> --> Deletes a branch and push the changes to the online repository. -d serves too.
     The local branch will still exist.
 
-- Clone a repository (only de main branch):
+- Clone a repository (only the main branch):
 git clone URL
 git clone URL "directory name"
 
